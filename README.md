@@ -1,2 +1,3 @@
-# DIO_learning
-Repository that will be used in challenges and learning on the DIO platform
+# DIO Formação Ruby Developer
+
+Repositorio para treinar e colocar em pratica cada modulo da formação em Ruby, para ampliar minhas habilidades principalmente almejando uma carreira como Dev.
