@@ -14,34 +14,43 @@ Acrescente 10% de folga e sempre arredonde os valores para cima, isto é, consid
 
 =end
 
-puts "Programa calcular quantas latas ou galões de tintas comprar.";
-puts "";
-puts "Informe o tamanho da área que sera pintada. Observação o valor será considerado em M²";
-areaPintada = gets.chomp.to_i;
+def calcular_tinta(area)
+  # Cobertura da tinta: 1 litro para cada 6 metros quadrados
+  litros_necessarios = (area / 6.0) * 1.1 # Acrescenta 10% de folga
+  litros_necessarios = litros_necessarios.ceil # Arredonda para cima
 
-totalArea = areaPintada/6;
+  # Preços e tamanhos das latas e galões
+  lata = {tamanho: 18, preco: 80.0}
+  galao = {tamanho: 3.6, preco: 25.0}
 
-# Calcula a quantidade de latas necessárias (sempre arredondando para cima usando o "ceil")
-latasTinta = (totalArea/18).ceil;
+  # Cálculo para latas
+  latas_necessarias = (litros_necessarios / lata[:tamanho]).ceil
+  preco_latas = latas_necessarias * lata[:preco]
 
-# Calcula a quantidade de latas necessárias (sempre arredondando para cima usando o "ceil")
-galaoTinta = (totalArea/3.6).ceil;
+  # Cálculo para galões
+  galoes_necessarios = (litros_necessarios / galao[:tamanho]).ceil
+  preco_galoes = galoes_necessarios * galao[:preco]
 
-# Calcula Preço dos Galões e Latas;
-precoLatas = latasTinta*80;
-precoGalao = galaoTinta*25;
+  # Cálculo para a mistura
+  latas_mistura = (litros_necessarios / lata[:tamanho]).floor
+  litros_faltantes = litros_necessarios - (latas_mistura * lata[:tamanho])
+  galoes_mistura = (litros_faltantes / galao[:tamanho]).ceil
+  preco_mistura = (latas_mistura * lata[:preco]) + (galoes_mistura * galao[:preco])
 
-misturaLatas = (totalArea/18).floor;
-restoLatas = totalArea - (misturaLatas * 18);
-misturaGalao = (restoLatas/3.6).ceil;
+  puts "Para pintar #{area}m² você precisará de:"
+  puts "  - Apenas latas de 18L:"
+  puts "    * #{latas_necessarias} latas"
+  puts "    * R$ #{preco_latas}"
+  puts "  - Apenas galões de 3,6L:"
+  puts "    * #{galoes_necessarios} galões"
+  puts "    * R$ #{preco_galoes}"
+  puts "  - Misturando latas e galões (menor desperdício):"
+  puts "    * #{latas_mistura} latas e #{galoes_mistura} galões"
+  puts "    * R$ #{preco_mistura}"
+end
 
-precoMistura = (misturaLatas * precoLatas) + (misturaGalao*precoGalao);
+# Solicita a área ao usuário
+puts "Digite a área a ser pintada em metros quadrados:"
+area = gets.chomp.to_f
 
-puts "Na compra somente de Latas de Tintas sera gasto #{latasTinta} latas de Tinta, com valor total de R$ #{precoLatas}.";
-puts "Na compra somente de Galões de Tintas sera gasto #{galaoTinta} Galões de Tinta, com valor total de R$ #{precoGalao}.";
-puts "Agora se Misturar Galões e Latas Tintas gastará #{misturaLatas}, Latas de Tintas"
-puts "e gastará #{misturaGalao} Galões de Tinta, com valor total de R$ #{precoMistura}.";
-
-
-
-
+calcular_tinta(area)
